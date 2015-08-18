@@ -1,0 +1,44 @@
+<template name="contests">
+
+  <div class="container"> 
+
+    <div class="row mt centered ">
+      <div class="col-lg-4 col-lg-offset-4">
+        <h3>What Is Happening?</h3>
+        <hr>
+      </div>
+    </div><!-- /row -->
+
+    <div class="row mt">
+      {{#each contests}}
+      <div class="col-lg-4 col-md-4 col-xs-12 desc">
+        <a class="b-link-fade b-animate-go" href="/contests/{{_id}}/{{slug}}"><div class="contest-thumb" style="background-image: url('..{{thumb}}'); width: 350px; height: 234px;"></div>
+          <div class="b-wrapper">
+              <h4 class="b-from-left b-animate b-delay03">Click here to</h4>
+              <p class="b-from-right b-animate b-delay03">view results in real-time!</p>
+          </div>
+        </a>
+        {{#if equals status "live"}}<div class="contest-status"><i class="fa fa-circle"></i> Live</div>{{/if}}
+        <p>{{title}} </p>
+        <p class="lead">{{description}}</p>
+        <hr>
+        <p class="time"><span class="pull-left">{{organizedBy}}</span> <i class="fa fa-comment-o"></i> {{comments}} | <i class="fa fa-calendar"></i> {{fullDate startDate}}</p>
+      </div><!-- col-lg-4 -->
+      {{/each}}
+      
+    </div><!-- /row -->
+
+    <div class="row mt centered">
+      <div class="col-lg-4 col-lg-offset-4">
+          <button type="button" class="btn btn-theme btn-lg">VIEW MORE</button><br>
+          <small>(not yet implemented)</small>
+      </div>
+    </div><!-- /row -->
+
+  </div><!-- /container -->
+
+</template>
+
+<template name="addContest">
+    <button class="btn btn-primary" id="add-contest">Add new contest</button>
+</template>

@@ -1,0 +1,91 @@
+<template name="contest">
+
+  <div class="container"> 
+
+    <div class="row mt centered ">
+      <div class="col-lg-8 col-lg-offset-2">
+        <h3>{{contest.title}} {{#if status}}<sup style="top: -1.7em; color: red; line-height: 0; font-size: 35%;">{{status}}</sup>{{/if}}</h3>
+        <hr>
+      </div>
+    </div><!-- /row -->
+
+    {{#if equals status "Live"}}
+      <div class="row mt centered">
+        <div class="col-lg-4 col-lg-offset-4">
+          {{#if judging}}
+            <button type="button" class="btn btn-primary btn-lg" id="back-button">Go back to results</button>
+          {{else}}
+            <button type="button" class="btn btn-primary btn-lg" id="judge-button">Try judging demo now</button>
+          {{/if}}
+        </div>
+      </div><!-- /row -->
+
+      <div class="row mt centered ">
+        <div class="col-md-12">
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{message}}
+          </div>
+        </div>
+      </div><!-- /row -->
+    {{/if}}
+
+    <div class="row mt">
+      <div class="col-lg-3 col-md-3 col-xs-12 desc">
+        <img src="{{contest.thumb}}" style="width: 100%;">
+        <p class="time"><span class="pull-left">{{contest.organizedBy}}</span> <i class="fa fa-comment-o"></i> {{contest.comments}} | <i class="fa fa-calendar"></i> {{fullDate contest.startDate}}</p>
+        <p class="lead">{{contest.description}}</p>
+      </div><!-- col-lg-4 -->
+
+      <div class="col-lg-9 col-md-9 col-xs-12">
+        {{#if judging}}
+          {{> judgeWindow}}
+        {{else}}
+          <div class="livestream-iframe">
+            <iframe width="640" height="360" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="{{contest.videoUrl}}" allowfullscreen></iframe>
+          </div>
+          <table class="table table-bordered table-hover table-condensed">
+            <thead class="ranking-table-head">
+              <tr>
+                <th>Place</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each skaters}}
+              <tr>
+                <td>{{place}}.</td>
+                <td>{{name}}</td>
+                <td>{{score}}</td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+      </div><!-- col-lg-4 -->
+
+      <div id="snap"></div>
+      
+    </div><!-- /row -->
+
+  </div><!-- /container -->
+
+</template>
+
+<template name="judgeWindow">
+  <div class="judge-contest">
+    {{#each skaters}}
+      <div class="skater">
+        <h3>{{name}}</h3>
+        <p>Your Score: <b><span class="example-val range" id="slider-{{_id}}">{{slider _id}}</span></b></p>
+        <div class="slider-{{_id}}"></div>
+      </div>
+      <div class="scoring">
+        <p>2nd judge score: <b>{{getSkaterScore _id}}</b> - your scores will be averaged!</p>
+        <button id="add-score" data-id="{{_id}}" data-score="{{slider _id}}">Add score</button>
+      </div>
+      <hr>
+    {{/each}}
+  </div>
+</template>
